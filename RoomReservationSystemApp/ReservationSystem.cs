@@ -12,7 +12,7 @@ public class ReservationSystem
 
         decimal totalPrice = room.CalculatePrice(stayDays);
         Console.WriteLine($"Reservation: Room number: {room.Number} Type: ({room.Type})");
-        Console.WriteLine($"Cost: {totalPrice} zł for {stayDays} days");
+        Console.WriteLine($"Cost: {totalPrice} $ for {stayDays} days");
         room.IsAvailable = false;
     }
 }

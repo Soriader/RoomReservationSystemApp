@@ -6,9 +6,7 @@ public class StandardRoom : IRoom
     public string Type { get; } = "Standard";
     public decimal BasePrice { get; } = 200m;
     public bool IsAvailable { get; set; } = true;
-
-    private const decimal VipFee = 100m; 
-
+    
 
     public StandardRoom(int number) 
     {
