@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomReservationSystemApp", "RoomReservationSystemApp\RoomReservationSystemApp.csproj", "{27FF7AA6-2B4C-4B7F-8F42-6881B69D49A4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{27FF7AA6-2B4C-4B7F-8F42-6881B69D49A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27FF7AA6-2B4C-4B7F-8F42-6881B69D49A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27FF7AA6-2B4C-4B7F-8F42-6881B69D49A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27FF7AA6-2B4C-4B7F-8F42-6881B69D49A4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
