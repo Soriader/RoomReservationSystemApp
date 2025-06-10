@@ -13,6 +13,8 @@ public class ReservationSystem
             return;
         }
 
+        room = ChooseRoom();
+
         decimal totalPrice = room.CalculatePrice(stayDays);
         Console.WriteLine($"Reservation: Room number: {room.Number} Type: ({room.Type})");
         Console.WriteLine($"Cost: {totalPrice} $ for {stayDays} days");
