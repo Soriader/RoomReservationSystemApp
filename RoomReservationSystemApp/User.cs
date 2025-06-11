@@ -6,10 +6,14 @@ public class User : IUser
     public string Name { get; }
     public string Email { get; }
 
-    public User(int id, string name, string email)
+    public int RentedRoomNumber { get; }
+
+
+    public User(int id, string name, string email, int rentedRoomNumber)
     {
         Id = id;
         Name = name;
         Email = email;
+        RentedRoomNumber = rentedRoomNumber;
     }
 }
