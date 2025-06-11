@@ -1,4 +1,5 @@
-﻿using RoomReservationSystemApp.TypeOfRoom;
+﻿using System.Text;
+using RoomReservationSystemApp.TypeOfRoom;
 
 namespace RoomReservationSystemApp;
 
@@ -25,24 +26,99 @@ public class ReservationSystem
     public IRoom ChooseRoom()
     {
         Console.WriteLine("Choose a room:\n1. Standard\n2. Family\n3. VIP");
-        int choice = Convert.ToInt32(Console.ReadLine());
+        var roomType  = Console.ReadLine();
 
+        while (!Validation.CorrectNumberAnser(roomType , 3))
+        {
+            roomType  = Console.ReadLine();
+        };
+
+        switch (roomType )
+        {
+            case "1":
+            {
+                roomType  = "StandardRoom";
+                break;
+            }
+            case "2":
+            {
+                roomType  = "FamilyRoom";
+                break;
+            }
+            case "3":
+            {
+                roomType  = "VIPRoom";
+                break;
+            }
+        }
+
+        ShowRoomsByType(roomType );
+        
         Console.WriteLine("Enter room number:");
         var answer = Console.ReadLine();
-        
         int number = Validation.InputValidation(answer);
 
-        return choice switch
+        using var context = new ReservationDbContext();
+
+        var dbRoom = context.Rooms
+            .FirstOrDefault(r => r.Type == roomType && r.Number == number);
+
+        while (dbRoom == null || !dbRoom.IsAvailable)
         {
-            1 => new StandardRoom(number),
-            2 => new FamilyRoom(number), 
-            3 => new VIPRoom(number),
-            _ => throw new ArgumentException("Invalid room type")
+            Console.WriteLine("Room is either not found or not available. Try again:");
+            answer = Console.ReadLine();
+            number = Validation.InputValidation(answer);
+
+            dbRoom = context.Rooms
+                .FirstOrDefault(r => r.Type == roomType && r.Number == number);
+        }
+
+        IRoom selectedRoom = roomType switch
+        {
+            "Standard" => new StandardRoom(number) { IsAvailable = dbRoom.IsAvailable },
+            "Family" => new FamilyRoom(number) { IsAvailable = dbRoom.IsAvailable },
+            "VIP" => new VIPRoom(number) { IsAvailable = dbRoom.IsAvailable },
+            _ => throw new Exception("Unknown room type")
         };
+
+        return selectedRoom;
+        
+    }
+
+    public string AllRooms()
+    {
+        var context = new ReservationDbContext();
+        var rooms = context.Rooms.ToList();
+
+        var builder = new StringBuilder();
+
+        foreach (var room in rooms)
+        {
+            builder.AppendLine(
+                $"Room {room.Number} | Type: {room.Type} | Available: {(room.IsAvailable ? "Yes" : "No")}");
+        }
+
+        return builder.ToString();
+    }
+
+    public void ShowRoomsByType(string type)
+    {
+        using var context = new ReservationDbContext();
+
+        var rooms = context.Rooms
+            .Where(r => r.Type == type)
+            .ToList();
+
+        if (!rooms.Any())
+        {
+            Console.WriteLine($"No rooms found for type: {type}");
+            return;
+        }
+
+        foreach (var room in rooms)
+        {
+            Console.WriteLine($"Room {room.Number} | Type: {room.Type} | Available: {(room.IsAvailable ? "Yes" : "No")}");
+        }
     }
     
-    public decimal CalculatePrice(int stayDays)
-    {
-        return _room.BasePrice * stayDays;
-    }
 }

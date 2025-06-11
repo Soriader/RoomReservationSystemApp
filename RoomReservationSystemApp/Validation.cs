@@ -3,6 +3,29 @@
 public class Validation
 {
     readonly IRoom _room;
+    public static bool CorrectNumberAnser(string userAnswer, int maxNumberOfAnswer)
+    {
+        if (int.TryParse(userAnswer, out int error) && error < 0 && error > maxNumberOfAnswer)
+        {
+            Console.WriteLine("Invalid option chosen.");
+            return false;
+        }
+
+        return true;
+    }
+    
+    private string RetrieveUserInput(string userAnswer)
+    {
+        string userInput;
+        do
+        {
+            Console.WriteLine(userAnswer);
+            userInput = Console.ReadLine();
+        } while (string.IsNullOrEmpty(userInput));
+
+        return userInput;
+    }
+    
     public static int InputValidation(string userAnswer)
     {
         while(!int.TryParse(userAnswer, out int number))
