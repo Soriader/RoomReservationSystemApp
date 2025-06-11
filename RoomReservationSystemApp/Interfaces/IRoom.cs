@@ -6,6 +6,6 @@ public interface IRoom
     string Type { get; }       
     decimal BasePrice { get; }  
     bool IsAvailable { get; set; }
-    decimal CalculatePrice(int stayDays);
+    //decimal CalculatePrice(int stayDays);
 
 }
