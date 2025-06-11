@@ -41,4 +41,8 @@ public class ReservationSystem
         };
     }
     
+    public decimal CalculatePrice(int stayDays)
+    {
+        return _room.BasePrice * stayDays;
+    }
 }

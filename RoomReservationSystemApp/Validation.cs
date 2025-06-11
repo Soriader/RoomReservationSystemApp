@@ -2,7 +2,7 @@
 
 public class Validation
 {
-    readonly IRoom room;
+    readonly IRoom _room;
     public static int InputValidation(string userAnswer)
     {
         while(!int.TryParse(userAnswer, out int number))
