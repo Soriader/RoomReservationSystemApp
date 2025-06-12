@@ -4,6 +4,14 @@ namespace RoomReservationSystemApp;
 
 public class RoomReservationDB
 {
+
+    public RoomReservationDB(int number, string type, bool isAvailable)
+    {
+        Number = number;
+        Type = type;
+        IsAvailable = isAvailable;
+    }
+    
     [Key]
     public int RoomId { get; set; }
 
