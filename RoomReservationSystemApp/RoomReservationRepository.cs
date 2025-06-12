@@ -18,9 +18,9 @@ public class RoomReservationRepository : IRepository<RoomReservationDB>
         Rooms.Add(entity);
     }
     
-    public RoomReservationDB GetByType(string title)
+    public RoomReservationDB GetByType(string type)
     {
-        return Rooms.FirstOrDefault(b => b.Type.ToLower() == title.ToLower());
+        return Rooms.FirstOrDefault(b => b.Type.ToLower() == type.ToLower());
     }
     
     public RoomReservationDB GetByRoomId(int entityId)

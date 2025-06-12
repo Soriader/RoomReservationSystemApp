@@ -6,6 +6,7 @@ namespace RoomReservationSystemApp;
 public class ReservationSystem
 {
     readonly IRoom _room;
+    readonly RoomReservationRepository _repository;
     public void BookRoom(IRoom room, int stayDays) 
     {
         if (!room.IsAvailable)
@@ -33,7 +34,7 @@ public class ReservationSystem
             roomType  = Console.ReadLine();
         };
 
-        switch (roomType )
+        switch (roomType)
         {
             case "1":
             {
@@ -52,7 +53,7 @@ public class ReservationSystem
             }
         }
 
-        ShowRoomsByType(roomType );
+        ShowRoomsByType(roomType);
         
         Console.WriteLine("Enter room number:");
         var answer = Console.ReadLine();
@@ -87,9 +88,10 @@ public class ReservationSystem
 
     public string AllRooms()
     {
-        var context = new ReservationDbContext();
-        var rooms = context.Rooms.ToList();
-
+        var repository = new RoomReservationRepository();
+    
+        var rooms = repository.GetAll();
+    
         var builder = new StringBuilder();
 
         foreach (var room in rooms)
@@ -98,6 +100,7 @@ public class ReservationSystem
                 $"Room {room.Number} | Type: {room.Type} | Available: {(room.IsAvailable ? "Yes" : "No")}");
         }
 
+        repository.Save();
         return builder.ToString();
     }
 
@@ -105,20 +108,16 @@ public class ReservationSystem
     {
         using var context = new ReservationDbContext();
 
-        var rooms = context.Rooms
-            .Where(r => r.Type == type)
-            .ToList();
+        var room = _repository.GetByType(type);
 
-        if (!rooms.Any())
+        if (room == null)
         {
             Console.WriteLine($"No rooms found for type: {type}");
             return;
         }
 
-        foreach (var room in rooms)
-        {
-            Console.WriteLine($"Room {room.Number} | Type: {room.Type} | Available: {(room.IsAvailable ? "Yes" : "No")}");
-        }
+        Console.WriteLine($"Room details for type '{type}':");
+        Console.WriteLine($"  Room {room.Number} | Type: {room.Type} | Available: {(room.IsAvailable ? "Yes" : "No")}");
     }
     
 }
