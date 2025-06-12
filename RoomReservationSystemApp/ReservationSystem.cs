@@ -7,6 +7,7 @@ public class ReservationSystem
 {
     readonly IRoom _room;
     readonly RoomReservationRepository _repository;
+    readonly ReservationDbContext _context;
     public void BookRoom(IRoom room, int stayDays) 
     {
         if (!room.IsAvailable)
@@ -58,10 +59,8 @@ public class ReservationSystem
         Console.WriteLine("Enter room number:");
         var answer = Console.ReadLine();
         int number = Validation.InputValidation(answer);
-
-        using var context = new ReservationDbContext();
-
-        var dbRoom = context.Rooms
+        
+        var dbRoom = _context.Rooms
             .FirstOrDefault(r => r.Type == roomType && r.Number == number);
 
         while (dbRoom == null || !dbRoom.IsAvailable)
@@ -70,7 +69,7 @@ public class ReservationSystem
             answer = Console.ReadLine();
             number = Validation.InputValidation(answer);
 
-            dbRoom = context.Rooms
+            dbRoom = _context.Rooms
                 .FirstOrDefault(r => r.Type == roomType && r.Number == number);
         }
 
@@ -88,9 +87,7 @@ public class ReservationSystem
 
     public string AllRooms()
     {
-        var repository = new RoomReservationRepository();
-    
-        var rooms = repository.GetAll();
+        var rooms = _repository.GetAll();
     
         var builder = new StringBuilder();
 
@@ -100,14 +97,12 @@ public class ReservationSystem
                 $"Room {room.Number} | Type: {room.Type} | Available: {(room.IsAvailable ? "Yes" : "No")}");
         }
 
-        repository.Save();
+        _repository.Save();
         return builder.ToString();
     }
 
     public void ShowRoomsByType(string type)
     {
-        using var context = new ReservationDbContext();
-
         var room = _repository.GetByType(type);
 
         if (room == null)
