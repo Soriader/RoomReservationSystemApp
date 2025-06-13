@@ -8,29 +8,36 @@ public class ReservationSystem
     readonly IRoom _room;
     readonly RoomReservationRepository _repository;
     readonly ReservationDbContext _context;
+    readonly Validation _validation;
     public void BookRoom(IRoom room, int stayDays) 
     {
+        Console.WriteLine("That is all room what we have:");
+        AllRooms();
+        room = ChooseRoom();
+        
         if (!room.IsAvailable)
         {
             Console.WriteLine("Room is not available!");
             return;
         }
 
-        room = ChooseRoom();
-
-        decimal totalPrice = room.CalculatePrice(stayDays);
+        decimal totalPrice = CalculatePrice(stayDays, room.BasePrice);
         Console.WriteLine($"Reservation: Room number: {room.Number} Type: ({room.Type})");
         Console.WriteLine($"Cost: {totalPrice} $ for {stayDays} days");
         room.IsAvailable = false;
     }
 
+    public decimal CalculatePrice(int stayDays, decimal basePrice)
+    {
+        return basePrice * stayDays;
+    }
 
     public IRoom ChooseRoom()
     {
         Console.WriteLine("Choose a room:\n1. Standard\n2. Family\n3. VIP");
         var roomType  = Console.ReadLine();
 
-        while (!Validation.CorrectNumberAnser(roomType , 3))
+        while (!_validation.CorrectNumberAnser(roomType , 3))
         {
             roomType  = Console.ReadLine();
         };
@@ -58,7 +65,7 @@ public class ReservationSystem
         
         Console.WriteLine("Enter room number:");
         var answer = Console.ReadLine();
-        int number = Validation.InputValidation(answer);
+        int number = _validation.InputValidation(answer);
         
         var dbRoom = _context.Rooms
             .FirstOrDefault(r => r.Type == roomType && r.Number == number);
@@ -67,7 +74,7 @@ public class ReservationSystem
         {
             Console.WriteLine("Room is either not found or not available. Try again:");
             answer = Console.ReadLine();
-            number = Validation.InputValidation(answer);
+            number = _validation.InputValidation(answer);
 
             dbRoom = _context.Rooms
                 .FirstOrDefault(r => r.Type == roomType && r.Number == number);

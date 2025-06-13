@@ -3,7 +3,7 @@
 public class Validation
 {
     readonly IRoom _room;
-    public static bool CorrectNumberAnser(string userAnswer, int maxNumberOfAnswer)
+    public bool CorrectNumberAnser(string userAnswer, int maxNumberOfAnswer)
     {
         if (int.TryParse(userAnswer, out int error) && error < 0 && error > maxNumberOfAnswer)
         {
@@ -26,7 +26,7 @@ public class Validation
         return userInput;
     }
     
-    public static int InputValidation(string userAnswer)
+    public int InputValidation(string userAnswer)
     {
         while(!int.TryParse(userAnswer, out int number))
         {
@@ -35,6 +35,17 @@ public class Validation
         }
         
         return int.Parse(userAnswer);
+    }
+
+    public decimal InputValidationPrice(string userAnswer)
+    {
+        while(!decimal.TryParse(userAnswer, out decimal number))
+        {
+            Console.WriteLine("Please enter a correct number");
+            userAnswer = Console.ReadLine();
+        }
+        
+        return decimal.Parse(userAnswer);
     }
     
     public bool IsRoomAvailable(IRoom room)
