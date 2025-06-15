@@ -1,7 +1,8 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using RoomReservationSystemApp;
 
-using RoomReservationSystemApp;
+var validation = new Validation();
+var repository = new RoomReservationRepository();
+var roomService = new RoomService(validation, repository);
+var adminPanel = new AdminPanel(roomService);
 
-var mainPanel = new MainPanel();
-
-mainPanel.Welcome();
+adminPanel.AddNewRoom();
