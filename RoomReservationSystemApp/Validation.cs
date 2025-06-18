@@ -3,11 +3,12 @@
 public class Validation
 {
     readonly IRoom _room;
-    public bool CorrectNumberAnser(string userAnswer, int maxNumberOfAnswer)
+    public bool IsUserNumberAnswerValid(string userAnswer, int maxAnswerNumber)
     {
-        if (int.TryParse(userAnswer, out int error) && error < 0 && error > maxNumberOfAnswer)
+        var isNumber = int.TryParse(userAnswer, out int answer);
+    
+        if (!isNumber || answer <= 0 || answer > maxAnswerNumber)
         {
-            Console.WriteLine("Invalid option chosen.");
             return false;
         }
 
@@ -61,7 +62,7 @@ public class Validation
         return false;
     }
     
-    private bool YesNoValidation(string userAnswer)
+    private bool IsValidYesNoAnswer(string userAnswer)
     {
         string userInput;
         do

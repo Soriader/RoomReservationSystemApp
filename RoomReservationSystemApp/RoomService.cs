@@ -45,8 +45,9 @@ public class RoomService : IRoomService
         Console.WriteLine("Add type of room:\n1. Standard\n2. Family\n3. VIP");
         var roomType = Console.ReadLine();
 
-        while (!_validation.CorrectNumberAnser(roomType, 3))
+        while (!_validation.IsUserNumberAnswerValid(roomType, 3))
         {
+            Console.WriteLine("Invalid option chosen. Please enter correct number from 1 to 3");
             roomType = Console.ReadLine();
         }
 
@@ -64,7 +65,7 @@ public class RoomService : IRoomService
         Console.WriteLine("Add price for room on one night:");
         var roomPrice = Console.ReadLine();
         
-        while (!_validation.CorrectNumberAnser(roomPrice, 1000))
+        while (!_validation.IsUserNumberAnswerValid(roomPrice, 1000))
         {
             Console.WriteLine("Invalid price, please enter again:");
             roomPrice = Console.ReadLine();
