@@ -1,4 +1,6 @@
-﻿namespace RoomReservationSystemApp;
+﻿using System.Text;
+
+namespace RoomReservationSystemApp;
 
 public class RoomService : IRoomService
 {
@@ -68,5 +70,40 @@ public class RoomService : IRoomService
             roomPrice = Console.ReadLine();
         }
         return decimal.Parse(roomPrice);
+    }
+    
+    public void ShowRoomsByType(string type)
+    {
+        var room = _repository.GetByType(type);
+
+        if (room == null)
+        {
+            Console.WriteLine($"No rooms found for type: {type}");
+            return;
+        }
+
+        Console.WriteLine($"Room details for type '{type}':");
+        Console.WriteLine($"  Room {room.Number} | Type: {room.Type} | Available: {(room.IsAvailable ? "Yes" : "No")}");
+    }
+    
+    public string AllRooms()
+    {
+        var rooms = _repository.GetAll();
+    
+        var builder = new StringBuilder();
+
+        foreach (var room in rooms)
+        {
+            builder.AppendLine(
+                $"Room {room.Number} | Type: {room.Type} | Available: {(room.IsAvailable ? "Yes" : "No")}");
+        }
+
+        _repository.Save();
+        return builder.ToString();
+    }
+    
+    public decimal CalculatePrice(int stayDays, decimal basePrice)
+    {
+        return basePrice * stayDays;
     }
 }
