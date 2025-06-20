@@ -107,4 +107,17 @@ public class RoomService : IRoomService
     {
         return basePrice * stayDays;
     }
+    
+    public void ShowRoomsByNumber(int roomNumber)
+    {
+        var room = _repository.GetByNumber(roomNumber);
+
+        if (room == null)
+        {
+            Console.WriteLine($"No rooms found for this number: {roomNumber}");
+            return;
+        }
+
+        Console.WriteLine($"  Room {room.Number} | Type: {room.Type} | Available: {(room.IsAvailable ? "Yes" : "No")}");
+    }
 }

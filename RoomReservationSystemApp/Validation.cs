@@ -3,6 +3,7 @@
 public class Validation
 {
     readonly IRoom _room;
+    
     public bool IsUserNumberAnswerValid(string userAnswer, int maxAnswerNumber)
     {
         var isNumber = int.TryParse(userAnswer, out int answer);

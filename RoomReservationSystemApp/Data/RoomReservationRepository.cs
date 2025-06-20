@@ -23,6 +23,11 @@ public class RoomReservationRepository : IRepository<RoomReservationDB>
         return Rooms.FirstOrDefault(b => b.Type.ToLower() == type.ToLower());
     }
     
+    public RoomReservationDB GetByNumber(int number)
+    {
+        return Rooms.FirstOrDefault(b => b.Number == number);
+    }
+    
     public RoomReservationDB GetByRoomId(int entityId)
     {
         return Rooms.Find(entityId);
