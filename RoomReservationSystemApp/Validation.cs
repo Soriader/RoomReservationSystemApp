@@ -3,6 +3,27 @@
 public class Validation
 {
     readonly IRoom _room;
+    private readonly RoomReservationRepository _repository;
+    
+    
+    public int GetValidAvailableRoomNumber(List<RoomReservationDB> availableRooms)
+    {
+        Console.WriteLine("\nPlease enter room number:");
+        while (true)
+        {
+            string input = Console.ReadLine();
+            if (!int.TryParse(input, out int roomNumber))
+            {
+                Console.WriteLine("Invalid number format. Please try again:");
+                continue;
+            }
+
+            if (availableRooms.Any(r => r.Number == roomNumber))
+                return roomNumber;
+
+            Console.WriteLine("Room not available or doesn't exist. Please choose from available rooms:");
+        }
+    }
     
     public bool IsUserNumberAnswerValid(string userAnswer, int maxAnswerNumber)
     {

@@ -9,8 +9,8 @@ public class MainPanel
     public void Welcome()
     {
         Console.WriteLine("Welcome in our reservation system! What you want to do?" +
-                          "\n1. Reservation room" +
-                          "\n2. Check the available room" );
+                          "\n1. Room reservation" +
+                          "\n2. Check the available rooms" );
         
         var answer = Console.ReadLine();
 
