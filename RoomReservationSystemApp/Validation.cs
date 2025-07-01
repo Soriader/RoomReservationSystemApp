@@ -11,6 +11,43 @@ public class Validation
         return !string.IsNullOrEmpty(userAnswer) && userAnswer.All(char.IsLetter) && char.IsUpper(userAnswer[0]);
     }
     
+    public bool IsCorrectMailName(string userAnswer)
+    {
+        if (string.IsNullOrEmpty(userAnswer) || userAnswer.Length < 3 || userAnswer.Length > 30)
+        {
+            return false;
+        }
+
+        if (!char.IsLetter(userAnswer[0]))
+        {
+            return false;
+        }
+
+        foreach (char c in userAnswer)
+        {
+            if (!(char.IsLetterOrDigit(c) || c == '.' || c == '_' || c == '-'))
+            {
+                return false;
+            }
+        }
+
+        for (int i = 0; i < userAnswer.Length - 1; i++)
+        {
+            if ((userAnswer[i] == '.' || userAnswer[i] == '_' || userAnswer[i] == '-') &&
+                (userAnswer[i+1] == '.' || userAnswer[i+1] == '_' || userAnswer[i+1] == '-'))
+            {
+                return false;
+            }
+        }
+
+        if (!char.IsLetterOrDigit(userAnswer[^1]))
+        {
+            return false;
+        }
+
+        return true;
+    }
+    
     public int GetValidAvailableRoomNumber(List<RoomReservationDB> availableRooms)
     {
         Console.WriteLine("\nPlease enter room number:");
@@ -89,7 +126,7 @@ public class Validation
         return false;
     }
     
-    private bool IsValidYesNoAnswer(string userAnswer)
+    public bool IsValidYesNoAnswer(string userAnswer)
     {
         string userInput;
         do
