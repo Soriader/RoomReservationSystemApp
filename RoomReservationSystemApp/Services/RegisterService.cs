@@ -1,6 +1,6 @@
 ﻿namespace RoomReservationSystemApp;
 
-public class RegisterToApp
+public class RegisterService
 {
     private readonly Validation _validation; 
     private readonly ClientRepository _repository;
