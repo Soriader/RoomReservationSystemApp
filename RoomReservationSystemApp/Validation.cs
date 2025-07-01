@@ -4,7 +4,12 @@ public class Validation
 {
     readonly IRoom _room;
     private readonly RoomReservationRepository _repository;
-    
+
+
+    public bool IsCorrectName(string userAnswer)
+    {
+        return !string.IsNullOrEmpty(userAnswer) && userAnswer.All(char.IsLetter) && char.IsUpper(userAnswer[0]);
+    }
     
     public int GetValidAvailableRoomNumber(List<RoomReservationDB> availableRooms)
     {
